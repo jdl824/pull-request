@@ -3,12 +3,16 @@ name: PR check naming convention
 on:
   pull_request:
     types: ['opened', 'edited', 'reopened', 'synchronize']
-
+    
 jobs:
-  pr-lint:
+  title-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: seferov/pr-lint-action@master
-      with:
-        title-regex: '^POS-\S.'
-        error-message: 'Add Ticket ID to your title e.g. "POS-"' 
+      - uses: naveenk1223/action-pr-title@master
+        with:
+          regex: '.+' # Regex the title should match.
+          allowed_prefixes: 'POS-,PSCPOS-,COUPON-,Patch' # title should start with the given prefix
+          prefix_case_sensitive: True # title prefix are case insensitive
+          min_length: 10 # Min length of the title
+          max_length: -1 # Max length of the title
+          error-message: 'Add Ticket ID to your title e.g. "POS-"'
